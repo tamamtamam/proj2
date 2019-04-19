@@ -18,17 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         DataRepository dataRepository = new DataRepository(this);
-//
-//        Disposable disposable = dataRepository.getPosts()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<List<Post>>() {
-//                    @Override
-//                    public void accept(List<Post> posts) throws Exception {
-//
-//                    }
-//                });
+
+        Disposable disposable = dataRepository.getPosts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Post>>() {
+                    @Override
+                    public void accept(List<Post> posts) throws Exception {
+//                        Log.e("WTF", String.valueOf(posts.size()));
+                    }
+                });
     }
 }
