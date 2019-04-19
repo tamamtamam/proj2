@@ -19,14 +19,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DataRepository dataRepository = new DataRepository(this);
-
-        Disposable disposable = dataRepository.getPosts()
+        Disposable disposable = dataRepository.getComments(3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Post>>() {
+                .subscribe(new Consumer<List<Comment>>() {
                     @Override
-                    public void accept(List<Post> posts) throws Exception {
-//                        Log.e("WTF", String.valueOf(posts.size()));
+                    public void accept(List<Comment> comments) throws Exception {
+                        Log.e("WTF", String.valueOf(comments.size()));
                     }
                 });
     }

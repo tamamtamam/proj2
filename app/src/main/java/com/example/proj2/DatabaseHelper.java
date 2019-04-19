@@ -3,6 +3,7 @@ package com.example.proj2;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -15,6 +16,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        Log.e("DATABASE", "creating");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS comment (id INTEGER PRIMARY KEY," +
+                "post_id INTEGER, name TEXT, body TEXT, email TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY, " +
                 "title TEXT, body TEXT, user_id INTEGER)");
     }

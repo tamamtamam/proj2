@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class LocalDataSource {
         return instance;
     }
 
-    void saveToDB(final List<Post> posts) {
+    void savePostsToDb(final List<Post> posts) {
 
         SQLiteDatabase writableDatabase = database.getWritableDatabase();
 
@@ -43,6 +44,22 @@ public class LocalDataSource {
             values.put("body", post.getBody());
 
             writableDatabase.insert("post", null, values);
+        }
+    }
+
+    void saveCommentsToDb(final List<Comment> comments) {
+
+        SQLiteDatabase writableDatabase = database.getWritableDatabase();
+
+        for (Comment comment : comments) {
+            ContentValues values = new ContentValues();
+            values.put("id", comment.getId());
+            values.put("email", comment.getEmail());
+            values.put("name", comment.getName());
+            values.put("body", comment.getBody());
+            values.put("post_id", comment.getPostId());
+
+            writableDatabase.insert("comment", null, values);
         }
     }
 
@@ -67,5 +84,27 @@ public class LocalDataSource {
         cursor.close();
 
         return posts;
+    }
+
+    List<Comment> getComments(int post_id) {
+        Cursor cursor = database.getReadableDatabase().rawQuery("select * from comment where post_id=" + post_id, null);
+
+        List<Comment> comments = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+
+            while (!cursor.isAfterLast()) {
+                Comment comment = new Comment();
+                comment.setBody(cursor.getString(cursor.getColumnIndex("body")));
+                comment.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+                comment.setName(cursor.getString(cursor.getColumnIndex("name")));
+                comment.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                comment.setPostId(cursor.getInt(cursor.getColumnIndex("post_id")));
+                comments.add(comment);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return comments;
     }
 }
