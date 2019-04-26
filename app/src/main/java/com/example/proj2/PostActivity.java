@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private PostsRecyclerViewAdapter adapter;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_grid:
                 if (!isGrid) {
                     isGrid = true;
-                    mRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(PostActivity.this, 2));
                     horizontalDecoration = new DividerItemDecoration(this,
                             DividerItemDecoration.HORIZONTAL);
                     mRecyclerView.addItemDecoration(horizontalDecoration);
