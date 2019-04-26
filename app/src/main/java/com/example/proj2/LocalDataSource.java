@@ -4,15 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
 
 public class LocalDataSource {
 
@@ -43,7 +37,7 @@ public class LocalDataSource {
             values.put("title", post.getTitle());
             values.put("body", post.getBody());
 
-            writableDatabase.insert("post", null, values);
+            writableDatabase.insertWithOnConflict("post", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
     }
 
@@ -59,7 +53,7 @@ public class LocalDataSource {
             values.put("body", comment.getBody());
             values.put("post_id", comment.getPostId());
 
-            writableDatabase.insert("comment", null, values);
+            writableDatabase.insertWithOnConflict("comment", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
     }
 

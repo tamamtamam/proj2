@@ -29,9 +29,9 @@ public class DataRepository {
     Single<List<Post>> getPosts() {
         long lastFetchedTime = sharedPreferences.getLong("last_fetched_time", 0);
         final long currentTime = System.currentTimeMillis();
-        Log.e("WTF", String.valueOf(lastFetchedTime));
+
         if (currentTime - lastFetchedTime > 5 * 60 * 1000) {
-            Log.e("WTF", "to");
+
             return apiService.posts()
                     .doOnSuccess(new Consumer<List<Post>>() {
                         @Override
@@ -55,26 +55,22 @@ public class DataRepository {
         final String sharedPreferencesKey = "post_" + String.valueOf(post_id) + "_comments_last_fetched_time";
         long lastFetchedTime = sharedPreferences.getLong(sharedPreferencesKey, 0);
         final long currentTime = System.currentTimeMillis();
-//        Log.e("WTF_LASTFT", String.valueOf(lastFetchedTime));
+
         if (currentTime - lastFetchedTime > 5 * 60 * 1000) {
-//            Log.e("WTF", "to");
             return apiService.comments(post_id)
                     .doOnSuccess(new Consumer<List<Comment>>() {
                         @Override
                         public void accept(List<Comment> comments) throws Exception {
-//                            Log.e("WTF", "chert_to_db");
                             localDataSource.saveCommentsToDb(comments);
                         }
                     })
                     .doOnSuccess(new Consumer<List<Comment>>() {
                         @Override
                         public void accept(List<Comment> comments) throws Exception {
-//                            Log.e("WTF", "chert");
                             sharedPreferences.edit().putLong(sharedPreferencesKey, System.currentTimeMillis()).apply();
                         }
                     }).onErrorReturnItem(localDataSource.getComments(post_id));
         } else {
-//            Log.e("WTF", "else");
             return Single.just(localDataSource.getComments(post_id));
         }
 
