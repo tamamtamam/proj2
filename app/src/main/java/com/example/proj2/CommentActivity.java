@@ -25,12 +25,13 @@ public class CommentActivity extends AppCompatActivity {
     private DataRepository dataRepository;
     private CompositeDisposable compositeDisposable;
     private int postId;
+    private Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        myToolbar = findViewById(R.id.my_toolbar);
         myToolbar.setBackgroundColor(Color.parseColor("#EF9A9A"));
         setSupportActionBar(myToolbar);
 
@@ -58,6 +59,7 @@ public class CommentActivity extends AppCompatActivity {
                 .subscribe(new Consumer<List<Comment>>() {
                     @Override
                     public void accept(List<Comment> comments) {
+                        myToolbar.setTitle("Post " + postId + ", " + comments.size() + " comments");
                         commentList.clear();
                         commentList.addAll(comments);
                         adapter.notifyDataSetChanged();
