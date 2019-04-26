@@ -1,5 +1,6 @@
 package com.example.proj2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements ClickListener {
 
     private RecyclerView mRecyclerView;
     private PostsRecyclerViewAdapter adapter;
@@ -47,7 +48,7 @@ public class PostActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
-        adapter = new PostsRecyclerViewAdapter(postList);
+        adapter = new PostsRecyclerViewAdapter(postList, this);
         mRecyclerView.setAdapter(adapter);
         compositeDisposable = new CompositeDisposable();
     }
@@ -107,5 +108,13 @@ public class PostActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onItemClicked(Post post) {
+        Intent openActivityIntent = new Intent(PostActivity.this, CommentActivity.class);
+        openActivityIntent.putExtra("post_id", post.getId());
+        startActivity(openActivityIntent);
     }
 }

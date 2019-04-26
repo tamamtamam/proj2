@@ -7,7 +7,7 @@ public class Comment {
     private String email;
     private String body;
 
-    public int getPostId() {
+    int getPostId() {
         return postId;
     }
 

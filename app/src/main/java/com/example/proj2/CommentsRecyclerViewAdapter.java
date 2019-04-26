@@ -9,13 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecyclerViewAdapter.CustomViewHolder> {
-    private List<Post> postList;
-    private ClickListener clickListener;
+public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRecyclerViewAdapter.CustomViewHolder> {
+    private List<Comment> commentList;
 
-    PostsRecyclerViewAdapter(List<Post> postList, ClickListener clickListener) {
-        this.postList = postList;
-        this.clickListener = clickListener;
+    CommentsRecyclerViewAdapter(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 
     @Override
@@ -27,12 +25,14 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
-        customViewHolder.bind(postList.get(i), clickListener);
+        Comment comment = commentList.get(i);
+        customViewHolder.title.setText(comment.getName());
+        customViewHolder.body.setText(comment.getBody());
     }
 
     @Override
     public int getItemCount() {
-        return (null != postList ? postList.size() : 0);
+        return (null != commentList ? commentList.size() : 0);
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -44,18 +44,5 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
             this.title = (TextView) view.findViewById(R.id.title);
             this.body = (TextView) view.findViewById(R.id.body);
         }
-
-        void bind(final Post post, final ClickListener listener) {
-            title.setText(post.getTitle());
-            body.setText(post.getBody());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClicked(post);
-                }
-            });
-
-        }
-
     }
 }

@@ -12,6 +12,6 @@ public interface ApiService {
     @GET("posts")
     Single<List<Post>> posts();
 
-    @GET("posts/1/comments")
+    @GET("posts/{postId}/comments")
     Single<List<Comment>> comments(@Query("postId") int id);
 }
