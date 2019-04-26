@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_grid"
+        android:icon="@drawable/ic_action_grid"
+        android:title="hi"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_ali"
+        android:title="Ali"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_hoda"
+        android:title="Hoda"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reza"
+        android:title="Reza"
+        app:showAsAction="never" />
+</menu>
